@@ -16,15 +16,6 @@ def video_main():
     f = open('voice.txt')
     text = f.read().strip()
 
-    # def center_text(text):
-    #     lines = text.splitlines()
-    #     width = max([len(line) for line in lines])
-    #     centered_lines = [line.center(width) for line in lines]
-    #     return '\n'.join(centered_lines)
-
-
-    # text = center_text(text)
-    # Create a TextClip for the text
     text_clip = TextClip(text=text, font=font, font_size=60, color='white')
     text_clip = text_clip.with_position(('center',700)).with_duration(5)
 
@@ -76,7 +67,7 @@ def video_main():
     # Trim the audio to the first 5 seconds
     count_down = count_down.subclipped(0, 5) 
 
-    final_clip = CompositeVideoClip([
+    main_clip = CompositeVideoClip([
         bg.subclipped(0,5),
         text_clip,
         top_image,
@@ -89,23 +80,23 @@ def video_main():
 
     celeb = AudioFileClip("./audio/celeb.mp3").with_volume_scaled(0.5)
 
-    # Trim the audio to the first 5 seconds
     celeb = celeb.subclipped(0, 5) 
 
-    # Select a random image from the grid
-    random_image = ImageClip("./images/image4.jpg").with_duration(5).resized(width=700).with_position("center")
-    random_image = random_image.with_effects([vfx.Resize(zoom_in)])
+    # Show The Answer Image
+    answer_image = ImageClip("./images/image4.jpg").with_duration(5).resized(width=700).with_position("center")
+    answer_image = answer_image.with_effects([vfx.Resize(zoom_in)])
     text_clip = TextClip(text="Subscribe If You Are \n           CORRECT", font=font, font_size=60, color='white')
     text_clip = text_clip.with_position(('center',1500)).with_duration(5)
-    random_clip = CompositeVideoClip([
+
+    answer_clip = CompositeVideoClip([
         bg.subclipped(0,5),
-        random_image,
+        answer_image,
         text_clip
     ]).with_audio(celeb)
 
 
     # Concatenate with the selected image
-    final_clip = concatenate_videoclips([initial_clip,final_clip, random_clip])
+    final_clip = concatenate_videoclips([initial_clip,main_clip, answer_clip])
 
     # Render the video
     final_clip.write_videofile("output.mp4", fps=30)
