@@ -5,9 +5,9 @@ import shutil
 import os
 
 
-# print("Generating Voice")
-# voice_main()
-# print("Generating Images")
-# image_main()
+print("Generating Voice")
+voice_main()
+print("Generating Images")
+image_main()
 print("Generating Video")
 video_main()
