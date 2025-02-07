@@ -6,7 +6,7 @@ import os
 
 
 print("Generating Voice")
-voice_main()
+#voice_main()
 print("Generating Images")
 image_main()
 print("Generating Video")
